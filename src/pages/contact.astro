@@ -1,0 +1,56 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import { inquiryChecklist, studio } from "../data/studio";
+
+const mailSubject = encodeURIComponent("工作室合作詢問");
+const mailBody = encodeURIComponent(`您好，我想詢問工作室合作：\n\n公司 / 單位：\n需求類型：\n預算範圍：\n預計時程：\n目前網站或參考連結：\n需求描述：\n`);
+---
+
+<SiteLayout
+  title="聯絡"
+  currentPath="/contact/"
+  eyebrow="Contact"
+  heading="提供需求、預算與時程後，我們會回覆建議合作範圍。"
+  lead="第一版先使用 email 詢問。等工作室名稱、正式信箱與表單工具確認後，可改接 Tally、Google Form 或正式 CRM。"
+>
+  <section class="section compact-top contact-page-grid">
+    <div class="inquiry-card">
+      <p class="eyebrow">Inquiry</p>
+      <h2>詢問前可先準備這些資訊。</h2>
+      <ul class="check-list">
+        {inquiryChecklist.map((item) => <li>{item}</li>)}
+      </ul>
+    </div>
+    <div class="inquiry-card inquiry-card-dark">
+      <p class="eyebrow">Email</p>
+      <h2>先用一封信確認合作可能性。</h2>
+      <p>
+        請附上目前網站、社群、品牌素材或參考案例。若專案需要拍攝，也請提供地點、日期與可公開程度。
+      </p>
+      <a class="button button-primary" href={`mailto:${studio.email}?subject=${mailSubject}&body=${mailBody}`}>
+        寄信詢問合作
+      </a>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="section-heading">
+      <p class="eyebrow">Response</p>
+      <h2>收到需求後，下一步會先判斷專案範圍，而不是直接報一個模糊價格。</h2>
+    </div>
+    <div class="method-grid">
+      <article>
+        <h3>確認目標</h3>
+        <p>釐清你需要的是品牌、網站、影像、活動內容，或是幾個範圍的整合。</p>
+      </article>
+      <article>
+        <h3>盤點素材</h3>
+        <p>確認目前已有的 Logo、照片、影片、文案、網站、社群與可公開案例。</p>
+      </article>
+      <article>
+        <h3>提出範圍</h3>
+        <p>依照預算與時程，整理可執行的製作項目、交付格式與合作節點。</p>
+      </article>
+    </div>
+  </section>
+</SiteLayout>

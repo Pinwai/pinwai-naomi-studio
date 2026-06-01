@@ -1,0 +1,55 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import { processSteps, servicePillars, studio } from "../data/studio";
+
+const basePath = import.meta.env.BASE_URL.endsWith("/") ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const withBase = (path: string) => `${basePath}${path.replace(/^\//, "")}`;
+---
+
+<SiteLayout
+  title="服務"
+  currentPath="/services/"
+  eyebrow="Services"
+  heading="從品牌、網站到影像內容，建立可交付的專案系統。"
+  lead="我們把服務拆成明確模組，先釐清品牌狀態、使用場景與交付需求，再決定設計、拍攝、內容與上線範圍。"
+>
+  <section class="section compact-top">
+    <div class="service-detail-grid">
+      {servicePillars.map((service) => (
+        <article class="detail-card">
+          <p class="eyebrow">{service.label}</p>
+          <h2>{service.title}</h2>
+          <p>{service.detail}</p>
+          <ul class="tag-list">
+            {service.deliverables.map((item) => <li>{item}</li>)}
+          </ul>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="process band">
+    <div class="section-heading">
+      <p class="eyebrow">Workflow</p>
+      <h2>服務不是單點交付，而是從需求到上線的完整流程。</h2>
+    </div>
+    <div class="timeline">
+      {processSteps.map((step) => (
+        <article>
+          <span>{step.number}</span>
+          <h3>{step.title}</h3>
+          <p>{step.text}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="contact contact-light">
+    <div>
+      <p class="eyebrow">Scope</p>
+      <h2>如果還不確定該選哪一種服務，可以先從需求盤點開始。</h2>
+      <p>寄來目前狀態、目標、預算與時程，我們會協助判斷需要設計、網站、攝影、影片或內容企劃的哪些範圍。</p>
+    </div>
+    <a class="button button-primary" href={withBase("/contact/")}>討論合作範圍</a>
+  </section>
+</SiteLayout>

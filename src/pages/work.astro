@@ -1,0 +1,63 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import { selectedWorks, studio } from "../data/studio";
+
+const basePath = import.meta.env.BASE_URL.endsWith("/") ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const withBase = (path: string) => `${basePath}${path.replace(/^\//, "")}`;
+---
+
+<SiteLayout
+  title="作品"
+  currentPath="/work/"
+  eyebrow="Selected Work"
+  heading="用可公開案例呈現設計、網站與影像的整合能力。"
+  lead="第一版先放雙方已公開作品，之後可替換成正式共同接案案例，並補上專案背景、交付項目、分工與成果。"
+>
+  <section class="section compact-top">
+    <div class="work-grid work-grid-expanded">
+      {selectedWorks.map((work) => (
+        <a class="work-card" href={work.href} target="_blank" rel="noreferrer">
+          <img src={withBase(work.image)} alt={work.title} loading="lazy" decoding="async" />
+          <div>
+            <p>{work.owner} · {work.type}</p>
+            <h3>{work.title}</h3>
+            <span>{work.summary}</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="band case-method">
+    <div class="section-heading">
+      <p class="eyebrow">Case Format</p>
+      <h2>正式共同案例頁會以服務成果來呈現，而不是只展示單張作品。</h2>
+    </div>
+    <div class="method-grid">
+      <article>
+        <h3>專案背景</h3>
+        <p>說明客戶情境、限制、目標受眾與溝通任務。</p>
+      </article>
+      <article>
+        <h3>交付項目</h3>
+        <p>列出品牌、網站、攝影、影片、文案或社群素材的實際交付。</p>
+      </article>
+      <article>
+        <h3>分工與成果</h3>
+        <p>清楚標示主責與協作內容，並呈現上線頁面、活動成果或可發布素材。</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="contact contact-light">
+    <div>
+      <p class="eyebrow">Portfolio Links</p>
+      <h2>需要更完整的個人作品脈絡，可分別查看兩人的作品集。</h2>
+      <p>工作室網站負責整合服務與共同接案，個人網站則保留更多分類與完整案例。</p>
+    </div>
+    <div class="contact-actions">
+      <a class="button button-primary" href={studio.pinwaiUrl} target="_blank" rel="noreferrer">Pinwai 作品集</a>
+      <a class="button button-outline" href={studio.naomiUrl} target="_blank" rel="noreferrer">Naomi 作品集</a>
+    </div>
+  </section>
+</SiteLayout>

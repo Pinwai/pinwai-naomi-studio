@@ -1,0 +1,82 @@
+---
+import "../styles/global.css";
+import { navItems, studio } from "../data/studio";
+
+interface Props {
+  title?: string;
+  description?: string;
+  currentPath?: string;
+  eyebrow?: string;
+  heading?: string;
+  lead?: string;
+}
+
+const {
+  title = studio.title,
+  description = studio.description,
+  currentPath = Astro.url.pathname,
+  eyebrow,
+  heading,
+  lead,
+} = Astro.props;
+
+const pageTitle = title === studio.name ? `${studio.name}｜${studio.title}` : `${title}｜${studio.name}`;
+const basePath = import.meta.env.BASE_URL.endsWith("/") ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const withBase = (href: string) => {
+  if (href.startsWith("http") || href.startsWith("mailto:") || href.startsWith("#")) return href;
+  return `${basePath}${href.replace(/^\//, "")}`;
+};
+const normalizedPath = currentPath.endsWith("/") ? currentPath : `${currentPath}/`;
+const isCurrent = (href: string) => {
+  if (href === "/") return normalizedPath === "/";
+  return normalizedPath.startsWith(href);
+};
+---
+
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href={withBase("/")} aria-label={`${studio.name} home`}>
+        <span>PN</span>
+        <strong>{studio.name}</strong>
+      </a>
+      <nav class="nav" aria-label="Primary navigation">
+        {navItems.map((item) => (
+          <a href={withBase(item.href)} aria-current={isCurrent(item.href) ? "page" : undefined}>
+            {item.label}
+          </a>
+        ))}
+      </nav>
+    </header>
+
+    <main id="top">
+      {heading && (
+        <section class="page-hero">
+          <p class="eyebrow">{eyebrow}</p>
+          <h1>{heading}</h1>
+          {lead && <p>{lead}</p>}
+        </section>
+      )}
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <strong>{studio.name}</strong>
+        <p>{studio.title}</p>
+      </div>
+      <div class="footer-links">
+        <a href={studio.pinwaiUrl} target="_blank" rel="noreferrer">Pinwai Portfolio</a>
+        <a href={studio.naomiUrl} target="_blank" rel="noreferrer">Naomi Portfolio</a>
+        <a href={`mailto:${studio.email}`}>{studio.email}</a>
+      </div>
+    </footer>
+  </body>
+</html>

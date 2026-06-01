@@ -1,0 +1,144 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import { heroImages, people, processSteps, selectedWorks, servicePillars, studio } from "../data/studio";
+
+const basePath = import.meta.env.BASE_URL.endsWith("/") ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const withBase = (path: string) => `${basePath}${path.replace(/^\//, "")}`;
+---
+
+<SiteLayout title={studio.name} currentPath="/">
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-media" aria-hidden="true">
+      {heroImages.map((image) => (
+        <img src={withBase(image.src)} alt={image.alt} loading="eager" decoding="async" />
+      ))}
+    </div>
+    <div class="hero-shade"></div>
+    <div class="hero-content">
+      <p class="eyebrow">Integrated Creative Studio</p>
+      <h1 id="hero-title">{studio.name}</h1>
+      <p class="hero-copy">{studio.description}</p>
+      <div class="hero-actions" aria-label="Primary actions">
+        <a class="button button-primary" href={withBase("/contact/")}>討論合作</a>
+        <a class="button button-secondary" href={withBase("/work/")}>查看案例</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="intro band">
+    <div class="section-heading">
+      <p class="eyebrow">Positioning</p>
+      <h2>從品牌識別到影像內容，建立一致的專案呈現。</h2>
+    </div>
+    <div class="intro-grid">
+      <p>
+        我們以雙主理人協作的方式處理品牌、網站與影像專案，讓策略、視覺、素材與上線需求在同一個製作節奏裡完成。每個專案先定義溝通目標與使用情境，再拆解成可執行的設計、拍攝、內容與交付項目。
+      </p>
+      <div class="intro-points" aria-label="Studio working principles">
+        <article>
+          <strong>策略定義</strong>
+          <span>先釐清品牌目標、受眾、內容用途與專案限制。</span>
+        </article>
+        <article>
+          <strong>素材一致</strong>
+          <span>讓視覺、網站、照片與影片維持同一套語氣。</span>
+        </article>
+        <article>
+          <strong>上線應用</strong>
+          <span>交付可直接用於網站、社群、活動與簡報的素材。</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="services">
+    <div class="section-heading">
+      <p class="eyebrow">Services</p>
+      <h2>以策略、設計與影像交付完整專案。</h2>
+    </div>
+    <div class="service-grid">
+      {servicePillars.map((service) => (
+        <article class="service-card">
+          <p>{service.label}</p>
+          <h3>{service.title}</h3>
+          <span>{service.summary}</span>
+          <ul>
+            {service.deliverables.slice(0, 4).map((item) => <li>{item}</li>)}
+          </ul>
+        </article>
+      ))}
+    </div>
+    <div class="section-action">
+      <a class="button button-outline" href={withBase("/services/")}>查看完整服務</a>
+    </div>
+  </section>
+
+  <section class="section work-section" id="work">
+    <div class="section-heading">
+      <p class="eyebrow">Selected Work</p>
+      <h2>以可公開案例呈現跨域服務能力。</h2>
+    </div>
+    <div class="work-grid">
+      {selectedWorks.slice(0, 6).map((work) => (
+        <a class="work-card" href={work.href} target="_blank" rel="noreferrer">
+          <img src={withBase(work.image)} alt={work.title} loading="lazy" decoding="async" />
+          <div>
+            <p>{work.owner} · {work.type}</p>
+            <h3>{work.title}</h3>
+            <span>{work.summary}</span>
+          </div>
+        </a>
+      ))}
+    </div>
+    <div class="section-action">
+      <a class="button button-outline" href={withBase("/work/")}>查看作品整理</a>
+    </div>
+  </section>
+
+  <section class="section" id="team">
+    <div class="section-heading">
+      <p class="eyebrow">Team</p>
+      <h2>雙主理人分工，讓設計策略與影像製作同步推進。</h2>
+    </div>
+    <div class="team-grid">
+      {people.map((person) => (
+        <article class="person-card">
+          <img src={withBase(person.image)} alt={person.name} loading="lazy" decoding="async" />
+          <div>
+            <p>{person.role}</p>
+            <h3>{person.name}</h3>
+            <span>{person.summary}</span>
+            <ul>
+              {person.skills.map((skill) => <li>{skill}</li>)}
+            </ul>
+            <a href={person.href} target="_blank" rel="noreferrer">查看個人網站</a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="process band">
+    <div class="section-heading">
+      <p class="eyebrow">Process</p>
+      <h2>每個專案從需求盤點開始，先定義範圍再進入製作。</h2>
+    </div>
+    <ol class="process-list">
+      {processSteps.map((step) => (
+        <li>
+          <span>{step.number}</span>
+          <strong>{step.title}</strong>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="contact" id="contact">
+    <div>
+      <p class="eyebrow">Contact</p>
+      <h2>提供需求、預算與時程後，我們會回覆建議合作範圍。</h2>
+      <p>正式 email、表單欄位與工作室名稱確認後，這裡可以接 Google Form、Tally、Notion Form 或純 email。</p>
+    </div>
+    <a class="button button-primary" href={withBase("/contact/")}>前往聯絡頁</a>
+  </section>
+</SiteLayout>

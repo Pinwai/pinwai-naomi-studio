@@ -1,0 +1,55 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import { people } from "../data/studio";
+
+const basePath = import.meta.env.BASE_URL.endsWith("/") ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const withBase = (path: string) => `${basePath}${path.replace(/^\//, "")}`;
+---
+
+<SiteLayout
+  title="團隊"
+  currentPath="/team/"
+  eyebrow="Team"
+  heading="雙主理人協作，讓設計規劃與影像製作在同一個節奏裡完成。"
+  lead="工作室採小團隊協作，適合需要清楚溝通、明確分工與完整交付的品牌、活動、網站與內容專案。"
+>
+  <section class="section compact-top">
+    <div class="team-grid team-grid-large">
+      {people.map((person) => (
+        <article class="person-card">
+          <img src={withBase(person.image)} alt={person.name} loading="lazy" decoding="async" />
+          <div>
+            <p>{person.role}</p>
+            <h3>{person.name}</h3>
+            <span>{person.summary}</span>
+            <ul>
+              {person.skills.map((skill) => <li>{skill}</li>)}
+            </ul>
+            <a href={person.href} target="_blank" rel="noreferrer">查看個人網站</a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="section-heading">
+      <p class="eyebrow">Collaboration</p>
+      <h2>在同一個專案裡，先對齊策略，再分別推進設計與影像。</h2>
+    </div>
+    <div class="method-grid">
+      <article>
+        <h3>共同盤點</h3>
+        <p>先確認品牌目標、受眾、使用場景、素材限制與時程，再決定專案範圍。</p>
+      </article>
+      <article>
+        <h3>專業分工</h3>
+        <p>Naomi 主責品牌、網站與視覺規格；Pinwai 主責影像企劃、拍攝與剪輯素材。</p>
+      </article>
+      <article>
+        <h3>整合交付</h3>
+        <p>最終交付不只是一組檔案，而是能用於網站、社群、活動或簡報的完整素材系統。</p>
+      </article>
+    </div>
+  </section>
+</SiteLayout>
